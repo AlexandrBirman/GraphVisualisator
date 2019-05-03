@@ -1,17 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
    <children>
-      <Pane prefHeight="600.0" prefWidth="159.0" style="-fx-background-color: #10161E;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1000.0" AnchorPane.topAnchor="0.0" />
-      <Group fx:id="canvasGroup" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="canvas" onMouseClicked="#handle" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #07252C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane prefWidth="250.0" style="-fx-background-color: #051B1F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <effect>
+            <DropShadow />
+         </effect>
          <children>
-            <Pane onMouseClicked="#handle" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #0E222A;" />
+            <VBox layoutX="75.0" layoutY="14.0" prefHeight="77.0" prefWidth="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <JFXRadioButton fx:id="directedRadioButton" prefHeight="17.0" prefWidth="107.0" text="Directed" textFill="#09945c">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="15.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="direction" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="undirectedRadioButton" selected="true" text="Undirected" textFill="#09945c" toggleGroup="$direction">
+                     <VBox.margin>
+                        <Insets left="15.0" top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXRadioButton>
+               </children>
+            </VBox>
+            <VBox layoutX="39.0" layoutY="14.0" prefHeight="83.0" prefWidth="125.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <JFXRadioButton fx:id="weightedRadioButton" text="Weighted" textFill="#09945c" textOverrun="CLIP">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="weight" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="unweightedRadioButton" selected="true" text="Unweighted" textFill="#09945c" toggleGroup="$weight">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXRadioButton>
+               </children>
+            </VBox>
+            <VBox layoutX="63.0" layoutY="553.0" prefHeight="83.0" prefWidth="125.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXToggleButton fx:id="addVertexToggleButton" onAction="#addVertexHandle" text="Add Vertex" textFill="#09945c" toggleColor="#0f5261" toggleLineColor="#068d55" unToggleColor="#0f2e40" unToggleLineColor="#0f5261">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXToggleButton>
+                  <JFXToggleButton fx:id="addEdgeToggleButton" onAction="#addEdgeHandle" text="Add Edge" textFill="#09945c" toggleColor="#0f5261" toggleLineColor="#068d55" unToggleColor="#0f2e40" unToggleLineColor="#0f5261">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXToggleButton>
+               </children>
+            </VBox>
+            <HBox layoutX="25.0" layoutY="700.0" prefHeight="100.0" prefWidth="196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXButton fx:id="resetButton" prefHeight="40.0" prefWidth="100.0" ripplerFill="#058c54" style="-fx-background-color: #07252C;" text="Reset" textFill="#068d55">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="10.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="clearButton" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #07252C;" text="Clear" textFill="#068d55">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="5.0" top="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </HBox>
          </children>
-      </Group>
+      </AnchorPane>
    </children>
 </AnchorPane>
