@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
@@ -7,7 +8,7 @@
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="realisation.controllers.MainController">
    <children>
       <Pane fx:id="canvas" onMouseClicked="#handle" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #07252C;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane prefWidth="250.0" style="-fx-background-color: #051B1F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -28,7 +29,7 @@
                         <ToggleGroup fx:id="direction" />
                      </toggleGroup>
                   </JFXRadioButton>
-                  <JFXRadioButton fx:id="undirectedRadioButton" selected="true" text="Undirected" textFill="#09945c" toggleGroup="$direction">
+                  <JFXRadioButton fx:id="undirectedRadioButton" text="Undirected" textFill="#09945c" toggleGroup="$direction">
                      <VBox.margin>
                         <Insets left="15.0" top="5.0" />
                      </VBox.margin>
@@ -51,7 +52,7 @@
                         <ToggleGroup fx:id="weight" />
                      </toggleGroup>
                   </JFXRadioButton>
-                  <JFXRadioButton fx:id="unweightedRadioButton" selected="true" text="Unweighted" textFill="#09945c" toggleGroup="$weight">
+                  <JFXRadioButton fx:id="unweightedRadioButton" text="Unweighted" textFill="#09945c" toggleGroup="$weight">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>

@@ -1,4 +1,4 @@
-package sample.controllers;
+package realisation.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -19,11 +20,14 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-import sample.components.Vertex;
+import realisation.components.Node;
 
 
 import java.awt.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
@@ -32,6 +36,7 @@ public class MainController implements Initializable{
                           undirected = true,
                           weighted = false,
                           unweighted = true;
+
     boolean addVertex = true,
             addEdge = false;
 
@@ -39,6 +44,11 @@ public class MainController implements Initializable{
     VertexGraphic selectedNode = null;
 
     private Shape intersect;
+
+    List<VertexGraphic> vertexes = new ArrayList<>();
+    List<Shape> edges = new ArrayList<>();
+
+    private Label sourceText = new Label("Source"), weight;
 
 
     @FXML
@@ -63,6 +73,9 @@ public class MainController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        undirectedRadioButton.setSelected(undirected);
+        unweightedRadioButton.setSelected(unweighted);
 
         directedRadioButton.setOnAction(event -> {
             directed = true;
@@ -135,32 +148,55 @@ public class MainController implements Initializable{
             VertexGraphic circle = (VertexGraphic) mouseEvent.getSource();
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED && mouseEvent.getButton() == MouseButton.PRIMARY) {
                 if (!circle.isSelected) {
+
                     if (selectedNode != null) {
                         edgeLine = new Line(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
-                        edgeLine.setStroke(Color.web("#051B1F"));
+                        edgeLine.setStroke(Color.BLACK);
                         edgeLine.setStrokeWidth(2);
                         canvas.getChildren().add(edgeLine);
                         edgeLine.setId("line");
-                        if (addVertex || addEdge) {
-                            selectedNode.isSelected = false;
-                            FillTransition ft1 = new FillTransition(Duration.millis(300), selectedNode, Color.WHITESMOKE, Color.web("#11DF6D"));
-                            ft1.play();
+
+                        if (weighted) {
+                            weight = new Label();
+                            weight.setLayoutX(((selectedNode.point.x) + (circle.point.x)) / 2);
+                            weight.setLayoutY(((selectedNode.point.y) + (circle.point.y)) / 2);
+                            weight.setTextFill(Color.web("#BFFDE0"));
+
+                            TextInputDialog dialog = new TextInputDialog("0");
+                            dialog.setTitle(null);
+                            dialog.setHeaderText("Enter Weight of the Edge :");
+                            dialog.setContentText(null);
+
+                            Optional<String> result = dialog.showAndWait();
+                            if (result.isPresent()) {
+                                weight.setText(result.get());
+                            } else {
+                                weight.setText("0");
+                            }
+                            canvas.getChildren().add(weight);
                         }
+
+                        selectedNode.isSelected = false;
+                        FillTransition ft1 = new FillTransition(Duration.millis(300), selectedNode, Color.WHITESMOKE, Color.web("#11DF6D"));
+                        ft1.play();
                         selectedNode = null;
                         return;
-
                     }
-                    if(!addVertex) {
+
+                    if(addEdge) {
                         FillTransition ft = new FillTransition(Duration.millis(300), circle, Color.web("#11DF6D"), Color.WHITESMOKE);
                         ft.play();
                         circle.isSelected = true;
                         selectedNode = circle;
+                        return;
                     }
+
                 }
+
                 else {
-                    circle.isSelected = false;
                     FillTransition ft1 = new FillTransition(Duration.millis(300), circle, Color.WHITESMOKE, Color.web("#11DF6D"));
                     ft1.play();
+                    circle.isSelected = false;
                     selectedNode = null;
                 }
             }
@@ -170,14 +206,14 @@ public class MainController implements Initializable{
 
     public class VertexGraphic extends Circle {
 
-        Vertex vertex;
+        Node node;
         Point point;
         Label id;
         boolean isSelected = false;
 
         public VertexGraphic(double x, double y, double rad, String name) {
             super(x, y, rad);
-            vertex = new Vertex(name, this);
+            node = new Node(name, this);
             point = new Point((int) x, (int) y);
             id = new Label(name);
             id.setTextFill(Color.web("#BFFDE0"));
