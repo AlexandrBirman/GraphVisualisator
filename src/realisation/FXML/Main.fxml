@@ -49,10 +49,10 @@
                         <Font size="14.0" />
                      </font>
                      <toggleGroup>
-                        <ToggleGroup fx:id="weight" />
+                        <ToggleGroup fx:id="weightGroup" />
                      </toggleGroup>
                   </JFXRadioButton>
-                  <JFXRadioButton fx:id="unweightedRadioButton" text="Unweighted" textFill="#09945c" toggleGroup="$weight">
+                  <JFXRadioButton fx:id="unweightedRadioButton" text="Unweighted" textFill="#09945c" toggleGroup="$weightGroup">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>

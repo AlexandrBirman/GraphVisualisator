@@ -48,6 +48,7 @@ public class MainController implements Initializable{
     List<VertexGraphic> vertexes = new ArrayList<>();
     List<Shape> edges = new ArrayList<>();
 
+    @FXML
     private Label sourceText = new Label("Source"), weight;
 
 
