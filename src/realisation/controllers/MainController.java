@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -75,8 +76,8 @@ public class MainController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        undirectedRadioButton.setSelected(undirected);
-        unweightedRadioButton.setSelected(unweighted);
+        undirectedRadioButton.setSelected(true);
+        unweightedRadioButton.setSelected(true);
 
         directedRadioButton.setOnAction(event -> {
             directed = true;
@@ -205,6 +206,24 @@ public class MainController implements Initializable{
         }
     };
 
+    @FXML
+    public void ResetHandle(ActionEvent event) {
+        canvas.getChildren().clear();
+
+        numberOfNodes = 0;
+        selectedNode = null;
+
+        addVertexToggleButton.setSelected(true);
+        addVertexToggleButton.setDisable(false);
+        addEdgeToggleButton.setSelected(false);
+        addEdgeToggleButton.setDisable(true);
+        addVertex = true;
+        addEdge = false;
+
+        undirectedRadioButton.setSelected(true);
+        unweightedRadioButton.setSelected(true);
+    }
+
     public class VertexGraphic extends Circle {
 
         Node node;
@@ -226,7 +245,7 @@ public class MainController implements Initializable{
             this.setFill(Color.web("#11DF6D"));
 
         }
-        
+
     }
 }
 
