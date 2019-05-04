@@ -31,7 +31,7 @@
                   </JFXRadioButton>
                   <JFXRadioButton fx:id="undirectedRadioButton" text="Undirected" textFill="#09945c" toggleGroup="$direction">
                      <VBox.margin>
-                        <Insets left="15.0" top="5.0" />
+                        <Insets left="15.0" top="8.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -54,7 +54,7 @@
                   </JFXRadioButton>
                   <JFXRadioButton fx:id="unweightedRadioButton" text="Unweighted" textFill="#09945c" toggleGroup="$weightGroup">
                      <VBox.margin>
-                        <Insets top="5.0" />
+                        <Insets top="8.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />

@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -21,6 +20,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
+import realisation.components.Arrow;
 import realisation.components.Node;
 
 
@@ -48,6 +48,9 @@ public class MainController implements Initializable{
 
     List<VertexGraphic> vertexes = new ArrayList<>();
     List<Shape> edges = new ArrayList<>();
+
+    @FXML
+    private Arrow arrow;
 
     @FXML
     private Label sourceText = new Label("Source"), weight;
@@ -80,23 +83,39 @@ public class MainController implements Initializable{
         unweightedRadioButton.setSelected(true);
 
         directedRadioButton.setOnAction(event -> {
-            directed = true;
-            undirected = false;
+            if (!directed) {
+                ResetHandle(event);
+                directedRadioButton.setSelected(true);
+                directed = true;
+                undirected = false;
+            }
             System.out.println("directed");
         });
         undirectedRadioButton.setOnAction(event -> {
-            directed = false;
-            undirected = true;
+            if (!undirected) {
+                ResetHandle(event);
+                undirectedRadioButton.setSelected(true);
+                directed = false;
+                undirected = true;
+            }
             System.out.println("undirected");
         });
         weightedRadioButton.setOnAction(event -> {
-            weighted = true;
-            unweighted = false;
+            if (!weighted) {
+                ResetHandle(event);
+                weightedRadioButton.setSelected(true);
+                weighted = true;
+                unweighted = false;
+            }
             System.out.println("weighted");
         });
         unweightedRadioButton.setOnAction(event -> {
-            weighted = false;
-            unweighted = true;
+            if (!unweighted) {
+                ResetHandle(event);
+                undirectedRadioButton.setSelected(true);
+                weighted = false;
+                unweighted = true;
+            }
             System.out.println("unweighted");
         });
 
@@ -148,15 +167,25 @@ public class MainController implements Initializable{
         @Override
         public void handle(MouseEvent mouseEvent) {
             VertexGraphic circle = (VertexGraphic) mouseEvent.getSource();
+
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED && mouseEvent.getButton() == MouseButton.PRIMARY) {
                 if (!circle.isSelected) {
 
                     if (selectedNode != null) {
-                        edgeLine = new Line(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
-                        edgeLine.setStroke(Color.BLACK);
-                        edgeLine.setStrokeWidth(2);
-                        canvas.getChildren().add(edgeLine);
-                        edgeLine.setId("line");
+
+                        if (undirected) {
+                            edgeLine = new Line(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
+                            edgeLine.setStroke(Color.BLACK);
+                            edgeLine.setStrokeWidth(2);
+                            canvas.getChildren().add(edgeLine);
+                            edgeLine.setId("line");
+                        }
+
+                        if (directed){
+                            arrow = new Arrow(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
+                            canvas.getChildren().add(arrow);
+                            arrow.setId("arrow");
+                        }
 
                         if (weighted) {
                             weight = new Label();
@@ -178,15 +207,19 @@ public class MainController implements Initializable{
                             canvas.getChildren().add(weight);
                         }
 
+                        if (unweighted){
+
+                        }
+
                         selectedNode.isSelected = false;
-                        FillTransition ft1 = new FillTransition(Duration.millis(300), selectedNode, Color.WHITESMOKE, Color.web("#11DF6D"));
+                        FillTransition ft1 = new FillTransition(Duration.millis(200), selectedNode, Color.WHITE, Color.web("#11DF6D"));
                         ft1.play();
                         selectedNode = null;
                         return;
                     }
 
                     if(addEdge) {
-                        FillTransition ft = new FillTransition(Duration.millis(300), circle, Color.web("#11DF6D"), Color.WHITESMOKE);
+                        FillTransition ft = new FillTransition(Duration.millis(200), circle, Color.web("#11DF6D"), Color.WHITE);
                         ft.play();
                         circle.isSelected = true;
                         selectedNode = circle;
@@ -196,7 +229,7 @@ public class MainController implements Initializable{
                 }
 
                 else {
-                    FillTransition ft1 = new FillTransition(Duration.millis(300), circle, Color.WHITESMOKE, Color.web("#11DF6D"));
+                    FillTransition ft1 = new FillTransition(Duration.millis(200), circle, Color.WHITE, Color.web("#11DF6D"));
                     ft1.play();
                     circle.isSelected = false;
                     selectedNode = null;
@@ -222,6 +255,7 @@ public class MainController implements Initializable{
 
         undirectedRadioButton.setSelected(true);
         unweightedRadioButton.setSelected(true);
+        System.out.println("RESET");
     }
 
     public class VertexGraphic extends Circle {
