@@ -33,13 +33,15 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable{
 
-    private static boolean directed = false,
-                          undirected = true,
-                          weighted = false,
-                          unweighted = true;
+    private boolean directed = false,
+                    undirected = true,
+                    weighted = false,
+                    unweighted = true,
 
-    boolean addVertex = true,
-            addEdge = false;
+                    addVertex = true,
+                    addEdge = false,
+                    wasReseyBefore = false;
+
 
     private int numberOfNodes = 0;
     VertexGraphic selectedNode = null;
@@ -241,6 +243,9 @@ public class MainController implements Initializable{
 
     @FXML
     public void ResetHandle(ActionEvent event) {
+        if (!wasReseyBefore)
+            wasReseyBefore = true;
+
         canvas.getChildren().clear();
 
         numberOfNodes = 0;
@@ -255,6 +260,12 @@ public class MainController implements Initializable{
 
         undirectedRadioButton.setSelected(true);
         unweightedRadioButton.setSelected(true);
+        if(!wasReseyBefore) {
+            weighted = false;
+            unweighted = true;
+            directed = false;
+            undirected = true;
+        }
         System.out.println("RESET");
     }
 
