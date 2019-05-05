@@ -84,7 +84,7 @@
             </VBox>
             <HBox layoutX="25.0" layoutY="700.0" prefHeight="100.0" prefWidth="196.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <JFXButton fx:id="resetButton" onAction="#ResetHandle" prefHeight="40.0" prefWidth="100.0" ripplerFill="#058c54" style="-fx-background-color: #07252C;" text="Reset" textFill="#068d55">
+                  <JFXButton fx:id="resetButton" buttonType="RAISED" onAction="#ResetHandle" prefHeight="40.0" prefWidth="100.0" ripplerFill="#058c54" style="-fx-background-color: #07252C;" text="Reset" textFill="#068d55">
                      <HBox.margin>
                         <Insets bottom="10.0" left="15.0" right="10.0" top="30.0" />
                      </HBox.margin>
@@ -92,7 +92,7 @@
                         <Font size="20.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="clearButton" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #07252C;" text="Clear" textFill="#068d55">
+                  <JFXButton fx:id="clearButton" buttonType="RAISED" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #07252C;" text="Clear" textFill="#068d55">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="5.0" top="30.0" />
                      </HBox.margin>
