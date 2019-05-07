@@ -23,8 +23,8 @@ public class Main extends Application {
         stage.setScene(new Scene(root));
         stage.setMinWidth(1200);
         stage.setMinHeight(800);
-        //stage.setFullScreenExitHint("");
-        //stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
+        stage.setFullScreen(true);
         //stage.setMaximized(true);
         stage.show();
 

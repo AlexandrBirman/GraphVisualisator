@@ -1,4 +1,4 @@
-package realisation.components;
+package realisation.components.graphic;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
@@ -20,7 +20,7 @@ public class Arrow extends Path {
         setStrokeWidth(2);
         setFill(Color.BLACK);
 
-        //Line
+        //LineGraph
         getElements().add(new MoveTo(startX, startY));
         getElements().add(new LineTo(endX, endY));
 

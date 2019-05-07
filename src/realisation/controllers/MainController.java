@@ -20,8 +20,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-import realisation.components.Arrow;
-import realisation.components.Node;
+import realisation.components.graphic.Arrow;
+import realisation.components.graphic.LineGraph;
+import realisation.components.logic.Node;
 
 
 import java.awt.*;
@@ -42,13 +43,14 @@ public class MainController implements Initializable{
                     addEdge = false,
                     wasResetBefore = false;
 
+    private float radius = 10f;
 
     private int numberOfNodes = 0;
-    VertexGraphic selectedNode = null;
+    Vertex selectedNode = null;
 
     private Shape intersect;
 
-    List<VertexGraphic> vertexes = new ArrayList<>();
+    List<Vertex> vertexes = new ArrayList<>();
     List<Shape> edges = new ArrayList<>();
 
     @FXML
@@ -76,13 +78,13 @@ public class MainController implements Initializable{
     private Pane canvas;
 
     @FXML
-    private Line edgeLine;
+    private LineGraph edgeLine;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        unweightedRadioButton.setSelected(true);
 
         undirectedRadioButton.setSelected(true);
-        unweightedRadioButton.setSelected(true);
 
         directedRadioButton.setOnAction(event -> {
             if (!directed) {
@@ -151,14 +153,14 @@ public class MainController implements Initializable{
             }
             System.out.println("here " + mouseEvent.getEventType());
             numberOfNodes++;
-            VertexGraphic circle = new VertexGraphic(mouseEvent.getX(), mouseEvent.getY(), 1, String.valueOf(numberOfNodes));
+            Vertex circle = new Vertex(mouseEvent.getX(), mouseEvent.getY(), 1, String.valueOf(numberOfNodes));
 
             canvas.getChildren().add(circle);
             circle.setOnMousePressed(mouseHandler);
 
             ScaleTransition tr = new ScaleTransition(Duration.millis(100), circle);
-            tr.setByX(10f);
-            tr.setByY(10f);
+            tr.setByX(radius);
+            tr.setByY(radius);
             tr.setInterpolator(Interpolator.EASE_OUT);
             tr.play();
         }
@@ -168,7 +170,7 @@ public class MainController implements Initializable{
     EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent mouseEvent) {
-            VertexGraphic circle = (VertexGraphic) mouseEvent.getSource();
+            Vertex circle = (Vertex) mouseEvent.getSource();
 
             if (mouseEvent.getEventType() == MouseEvent.MOUSE_PRESSED && mouseEvent.getButton() == MouseButton.PRIMARY) {
                 if (!circle.isSelected) {
@@ -176,9 +178,7 @@ public class MainController implements Initializable{
                     if (selectedNode != null) {
 
                         if (undirected) {
-                            edgeLine = new Line(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
-                            edgeLine.setStroke(Color.BLACK);
-                            edgeLine.setStrokeWidth(2);
+                            edgeLine = new LineGraph(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y, radius);
                             canvas.getChildren().add(edgeLine);
                             edgeLine.setId("line");
                         }
@@ -271,14 +271,14 @@ public class MainController implements Initializable{
         System.out.println("RESET");
     }
 
-    public class VertexGraphic extends Circle {
+    public class Vertex extends Circle {
 
         Node node;
         Point point;
         Label id;
         boolean isSelected = false;
 
-        public VertexGraphic(double x, double y, double rad, String name) {
+        public Vertex(double x, double y, double rad, String name) {
             super(x, y, rad);
             node = new Node(name, this);
             point = new Point((int) x, (int) y);

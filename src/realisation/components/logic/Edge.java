@@ -1,4 +1,4 @@
-package realisation.components;
+package realisation.components.logic;
 
 import javafx.scene.shape.Shape;
 
