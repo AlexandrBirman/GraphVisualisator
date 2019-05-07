@@ -1,4 +1,8 @@
 
+// An example explaining how 
+// to draw lines not to the center 
+// but to the side of the circle
+
 void setup()
 {
   size(800,600);
