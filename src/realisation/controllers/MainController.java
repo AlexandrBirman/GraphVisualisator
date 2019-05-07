@@ -40,7 +40,7 @@ public class MainController implements Initializable{
 
                     addVertex = true,
                     addEdge = false,
-                    wasReseyBefore = false;
+                    wasResetBefore = false;
 
 
     private int numberOfNodes = 0;
@@ -86,7 +86,7 @@ public class MainController implements Initializable{
 
         directedRadioButton.setOnAction(event -> {
             if (!directed) {
-                ResetHandle(event);
+                resetHandle(event);
                 directedRadioButton.setSelected(true);
                 directed = true;
                 undirected = false;
@@ -95,7 +95,7 @@ public class MainController implements Initializable{
         });
         undirectedRadioButton.setOnAction(event -> {
             if (!undirected) {
-                ResetHandle(event);
+                resetHandle(event);
                 undirectedRadioButton.setSelected(true);
                 directed = false;
                 undirected = true;
@@ -104,7 +104,7 @@ public class MainController implements Initializable{
         });
         weightedRadioButton.setOnAction(event -> {
             if (!weighted) {
-                ResetHandle(event);
+                resetHandle(event);
                 weightedRadioButton.setSelected(true);
                 weighted = true;
                 unweighted = false;
@@ -113,8 +113,8 @@ public class MainController implements Initializable{
         });
         unweightedRadioButton.setOnAction(event -> {
             if (!unweighted) {
-                ResetHandle(event);
-                undirectedRadioButton.setSelected(true);
+                resetHandle(event);
+                unweightedRadioButton.setSelected(true);
                 weighted = false;
                 unweighted = true;
             }
@@ -242,9 +242,7 @@ public class MainController implements Initializable{
     };
 
     @FXML
-    public void ResetHandle(ActionEvent event) {
-        if (!wasReseyBefore)
-            wasReseyBefore = true;
+    public void resetHandle(ActionEvent event) {
 
         canvas.getChildren().clear();
 
@@ -258,14 +256,18 @@ public class MainController implements Initializable{
         addVertex = true;
         addEdge = false;
 
-        undirectedRadioButton.setSelected(true);
-        unweightedRadioButton.setSelected(true);
-        if(!wasReseyBefore) {
+
+        if(!wasResetBefore) {
+            undirectedRadioButton.setSelected(true);
+            unweightedRadioButton.setSelected(true);
             weighted = false;
             unweighted = true;
             directed = false;
             undirected = true;
         }
+        if (!wasResetBefore)
+            wasResetBefore = true;
+
         System.out.println("RESET");
     }
 
