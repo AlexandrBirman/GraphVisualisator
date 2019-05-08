@@ -17,11 +17,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import realisation.components.graphic.Arrow;
-import realisation.components.graphic.LineGraph;
+import realisation.components.graphic.Line;
+import realisation.components.graphic.Vertex;
 import realisation.components.logic.Node;
 
 
@@ -48,7 +49,7 @@ public class MainController implements Initializable{
     private int numberOfNodes = 0;
     Vertex selectedNode = null;
 
-    private Shape intersect;
+    private Shape intersection;
 
     List<Vertex> vertexes = new ArrayList<>();
     List<Shape> edges = new ArrayList<>();
@@ -75,10 +76,10 @@ public class MainController implements Initializable{
                       clearButton;
 
     @FXML
-    private Pane canvas;
+    public Pane canvas;
 
     @FXML
-    private LineGraph edgeLine;
+    private Line edgeLine;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -153,7 +154,7 @@ public class MainController implements Initializable{
             }
             System.out.println("here " + mouseEvent.getEventType());
             numberOfNodes++;
-            Vertex circle = new Vertex(mouseEvent.getX(), mouseEvent.getY(), 1, String.valueOf(numberOfNodes));
+            Vertex circle = new Vertex(mouseEvent.getX(), mouseEvent.getY(), 1, String.valueOf(numberOfNodes), canvas);
 
             canvas.getChildren().add(circle);
             circle.setOnMousePressed(mouseHandler);
@@ -178,13 +179,13 @@ public class MainController implements Initializable{
                     if (selectedNode != null) {
 
                         if (undirected) {
-                            edgeLine = new LineGraph(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y, radius);
+                            edgeLine = new Line(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y, radius);
                             canvas.getChildren().add(edgeLine);
                             edgeLine.setId("line");
                         }
 
                         if (directed){
-                            arrow = new Arrow(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y);
+                            arrow = new Arrow(selectedNode.point.x, selectedNode.point.y, circle.point.x, circle.point.y, radius);
                             canvas.getChildren().add(arrow);
                             arrow.setId("arrow");
                         }
@@ -271,28 +272,5 @@ public class MainController implements Initializable{
         System.out.println("RESET");
     }
 
-    public class Vertex extends Circle {
-
-        Node node;
-        Point point;
-        Label id;
-        boolean isSelected = false;
-
-        public Vertex(double x, double y, double rad, String name) {
-            super(x, y, rad);
-            node = new Node(name, this);
-            point = new Point((int) x, (int) y);
-            id = new Label(name);
-            id.setTextFill(Color.web("#BFFDE0"));
-            canvas.getChildren().add(id);
-            id.setLayoutX(x - 18);
-            id.setLayoutY(y - 18);
-            this.setOpacity(0.5);
-            this.setId("node");
-            this.setFill(Color.web("#11DF6D"));
-
-        }
-
-    }
 }
 
