@@ -11,15 +11,18 @@ public class Line extends Path{
     protected double startX, startY, endX, endY;
     protected double l;
 
-    public Line(double x1, double y1, double x2, double y2, float radius) {
+    private Color lineColor = Color.web("#067d5f");
+    private short lineWeight = 3;
+
+    public Line(double x2, double y2, double x1, double y1, float radius) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
         this.y2 = y2;
         this.radius = radius;
 
-        setStroke(Color.web("#1E8A79"));
-        setStrokeWidth(3);
+        setStroke(lineColor);
+        setStrokeWidth(lineWeight);
         l = sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
         startX = (int) x2 - (radius + 2)*((x2-x1)/l);
         startY = (int) y2 - (radius + 2)*((y2-y1)/l);

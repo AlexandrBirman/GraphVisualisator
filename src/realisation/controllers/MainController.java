@@ -215,14 +215,14 @@ public class MainController implements Initializable{
                         }
 
                         selectedNode.isSelected = false;
-                        FillTransition ft1 = new FillTransition(Duration.millis(200), selectedNode, Color.WHITE, Color.web("#11DF6D"));
+                        FillTransition ft1 = new FillTransition(Duration.millis(200), selectedNode, Color.RED, Color.web("#068d55"));
                         ft1.play();
                         selectedNode = null;
                         return;
                     }
 
                     if(addEdge) {
-                        FillTransition ft = new FillTransition(Duration.millis(200), circle, Color.web("#11DF6D"), Color.WHITE);
+                        FillTransition ft = new FillTransition(Duration.millis(200), circle, Color.web("#068d55"), Color.RED);
                         ft.play();
                         circle.isSelected = true;
                         selectedNode = circle;
@@ -232,7 +232,7 @@ public class MainController implements Initializable{
                 }
 
                 else {
-                    FillTransition ft1 = new FillTransition(Duration.millis(200), circle, Color.WHITE, Color.web("#11DF6D"));
+                    FillTransition ft1 = new FillTransition(Duration.millis(200), circle, Color.RED, Color.web("#068d55"));
                     ft1.play();
                     circle.isSelected = false;
                     selectedNode = null;

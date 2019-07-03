@@ -27,7 +27,6 @@ public class Vertex extends Circle {
         id.setLayoutY(y - 20);
         id.setFont(new Font("Arial", 15));
         this.setId("node");
-        this.setFill(Color.web("#11DF6D"));
+        this.setFill(Color.web("#068d55"));
     }
-
 }
